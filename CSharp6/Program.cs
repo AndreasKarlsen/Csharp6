@@ -35,6 +35,7 @@ namespace CSharp6
             * * Example: public double Dist => Sqrt(X * X + Y * Y);
 
             * Index initializers - Object initializers are extended to allow initialization of indices
+            * before it was only properties
             * * Example: 
             public JObject ToJson()
             {
@@ -47,7 +48,11 @@ namespace CSharp6
             public JObject ToJson() => new JObject() { ["x"] = X, ["y"] = Y };
 
             * Null condition operators
-            * 
+            *  .? simplifies null checking, intent stands out clearly
+
+            * nameof operator gives you the name of the variable
+
+            * when on catch blocks allows filtering exceptions
 
             * Links: 
             * * https://www.youtube.com/watch?v=YHWCFeE2L-4
