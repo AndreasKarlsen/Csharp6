@@ -4,38 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using static System.Math;
 
 namespace CSharp6
 {
     public class Point
     {
-        private int _X;
-        public int X
-        {
-            get
-            {
-                return _X;
-            }
-        }
+        public int X { get; private set; }
+
         public int Y { get; private set; }
 
         public Point(int x, int y)
         {
-            _X = x;
+            X = x;
             Y = y;
         }
 
-        public double Dist
-        {
-            get
-            {
-                return Math.Sqrt(X * X + Y * Y);
-            }
-        }
+        public double Dist => Sqrt(X * X + Y * Y);
 
         protected bool Equals(Point other)
         {
-            return _X == other._X && Y == other.Y;
+            return X == other.X && Y == other.Y;
         }
 
         public override bool Equals(object obj)
@@ -50,7 +39,7 @@ namespace CSharp6
         {
             unchecked
             {
-                return (_X*397) ^ Y;
+                return (X*397) ^ Y;
             }
         }
 
@@ -68,33 +57,22 @@ namespace CSharp6
         {
             if (point == null)
             {
-                throw new ArgumentNullException("point");
+                throw new ArgumentNullException(nameof(point));
             }
-            _X += point.X;
+            X += point.X;
             Y += point.Y;
             return this;
         }
 
-        public override string ToString()
-        {
-            return string.Format("({0}, {1})", X, Y);
-        }
+        public override string ToString() => $"({nameof(X)}: {X}, {nameof(Y)}: {Y})";
 
-        public JObject ToJson()
-        {
-            var result = new JObject();
-            result["x"] = X;
-            result["y"] = Y;
-            return result;
-        }
+        public JObject ToJson() => new JObject() {["x"] = X, ["y"] = Y};
 
         public static Point FromJson(JObject json)
         {
-            if (json != null &&
-                json["x"] != null &&
-                json["x"].Type == JTokenType.Integer &&
-                json["y"] != null &&
-                json["y"].Type == JTokenType.Integer)
+            if (
+                json?["x"]?.Type == JTokenType.Integer &&
+                json?["y"]?.Type == JTokenType.Integer)
             {
                 return new Point(json.Value<int>("x"), json.Value<int>("y"));
             }

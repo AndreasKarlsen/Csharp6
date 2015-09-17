@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CSharp6;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace CSharp6Test
 {
@@ -18,8 +19,8 @@ namespace CSharp6Test
         [TestMethod]
         public void TestGetter()
         {
-            Assert.AreEqual(0, _point.X);
-            Assert.AreEqual(16, _point.Y);
+            AreEqual(0, _point.X);
+            AreEqual(16, _point.Y);
         }
 
         [TestMethod]
@@ -31,21 +32,21 @@ namespace CSharp6Test
         [TestMethod]
         public void TestDistance()
         {
-            Assert.AreEqual(16, _point.Dist);
+            AreEqual(16, _point.Dist);
         }
 
         [TestMethod]
         public void TestToString()
         {
-            Assert.AreEqual("(0, 16)", _point.ToString());
+            AreEqual("(X: 0, Y: 16)", _point.ToString());
         }
 
         [TestMethod]
         public void TestToJson()
         {
             var pointAsJson = _point.ToJson();
-            Assert.AreEqual(_point.X, pointAsJson.Value<int>("x"));
-            Assert.AreEqual(_point.Y, pointAsJson.Value<int>("y"));
+            AreEqual(_point.X, pointAsJson.Value<int>("x"));
+            AreEqual(_point.Y, pointAsJson.Value<int>("y"));
         }
 
         [TestMethod]
@@ -53,14 +54,14 @@ namespace CSharp6Test
         {
             var pointAsJson = _point.ToJson();
             var point = Point.FromJson(pointAsJson);
-            Assert.AreEqual(point, _point);
+            AreEqual(point, _point);
         }
 
         [TestMethod]
         public void TestFromJsonNull()
         {
             var point = Point.FromJson(null);
-            Assert.IsNull(point);
+            IsNull(point);
         }
 
         [TestMethod]
@@ -68,8 +69,8 @@ namespace CSharp6Test
         {
             var point = new Point(16, 0);
             _point.Add(point);
-            Assert.AreEqual(16, _point.X);
-            Assert.AreEqual(16, _point.Y);
+            AreEqual(16, _point.X);
+            AreEqual(16, _point.Y);
         }
 
         [TestMethod]
@@ -88,7 +89,8 @@ namespace CSharp6Test
             }
             catch (ArgumentNullException exception) when (exception.ParamName == "point")
             {
-                Assert.IsTrue(exception.ParamName == "point");
+
+                IsTrue(exception.ParamName == "point");
             }
         }
     }
